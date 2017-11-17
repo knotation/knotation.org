@@ -3,149 +3,229 @@
 
 This quick start assumes you're familiar with Linked Data and Turtle syntax. If not, the longer [tutorial](tutorial.html) will be a better introduction.
 
+<script src="knotation_editor.js"></script>
 
-## Knotation and Turtle
+## Knotation vs. Turtle
 
-Turtle syntax is the closest to Knotation. The Knotation on the left is equivalent to the Turtle on the right.
+Turtle syntax is the closest to Knotation. Below, an individual (an owl) identified by `ex:123` is defined in Knotation on the left and Turtle on the right.
 
-<textarea class="half">
+<div id="ex_1" class="examples halves">
+<textarea id="ex_1_kn">
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 @prefix ex: <https://example.com/>
 
-: ex:some-subject
-ex:has-literal: text
-ex:has-language-literal; @fr: texte
-ex:has-typed-literal; ex:number: 1234
+: ex:123
+rdfs:label: owl 123
+ex:translation; @fr: hibou 123
+ex:has-wingspan; ex:inches: 22
 </textarea>
 
-<textarea class="half">
+<textarea id="ex_1_ttl">
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex: <https://example.com/> .
 
-ex:some-subject
-  ex:has-literal "text" ;
-  ex:has-language-literal "texte"@fr ;
-  ex:has-typed-literal "1234"^^ex:number .
+ex:123
+  rdfs:label "owl 123" ;
+  ex:translation "hibou 123"@fr ;
+  ex:has-wingspan "22"^^ex:inches .
 </textarea>
+</div>
+
+<script>
+var ex_1_kn = knotation_editor.editor.fromSelector('#ex_1_kn', {mode: 'knotation'});
+var ex_1_ttl = knotation_editor.editor.fromSelector('#ex_1_ttl', {mode: 'turtle'});
+</script>
 
 TODO: Synchronize these editors, so a change to one is immediately reflected in the other.
 
 Key similarities and differences in this example:
 
-- both Knotation and Turtle use prefixes and CURIEs
-- Knotation indicates the current subject with a line that starts with `: `
-- in Turtle, semi-colons separate predicate-object pairs
-- in Knotation, we start the line with a predicate, then an optional semi-colon and datatype, then a colon and the object
-- plain literals
-    - Turtle uses quoted strings
-    - Knotation just uses plain text
-- language and typed literals
-    - in Turtle the datatype follows the quoted lexical value of the object
-    - in Knotation the dataype comes after the predicate and before the lexical value of the object
+- Both use prefixes and CURIEs
+- For subjects
+    - Turtle: current subject at start of line, predicate-object pairs on following lines preceded by tab
+    - Knotation: current subject preceded by `: ` (e.g. `: subject`)
+- For predicate-object pairs
+    - Turtle: separated by semi-colons
+    - Knotation: each line after the subject has a predicate, optional datatype, and object (e.g. `predicate: object`)
+- For plain literals
+    - Turtle: quoted strings
+    - Knotation: plain text
+- For language and typed literals
+    - Turtle: datatype follows the quoted lexical value of the object
+    - Knotation: the dataype comes after the predicate (with a semicolon) and before the lexical value of the object (e.g. `predicate; datatype: object`)
 
-The main advantage of Knotation over Turtle is that we can use labels instead of CURIEs.
+In Knotation, we can use labels instead of CURIEs and IRIs. The label has to be specified before it's used. The result is a little longer but easier to read.
 
-<textarea class="half">
+<div id="ex_2" class="examples halves">
+<textarea id="ex_2_kn">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 @prefix ex: <https://example.com/>
 
-: ex:some-predicate
-rdfs:label: some predicate
+: rdfs:label
+rdfs:label: label
 
-: ex:some-subject
-some predicate: text
+: ex:translation
+label: translation
+
+: ex:inches
+label: inches
+
+: ex:has-wingspan
+label: has wingspan
+
+: ex:123
+label: owl 123
+translation; @fr: hibou 123
+has wingspan; inches: 22
 </textarea>
 
-<textarea class="half">
+<textarea id="ex_2_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex: <https://example.com/> .
 
-ex:some-predicate
-  rdfs:label "some predicate" .
+rdfs:label
+  rdfs:label "label" .
 
-ex:some-subject
-  ex:some-predicate "text" .
+ex:translation
+  rdfs:label "translation" .
+
+ex:inches
+  rdfs:label "inches" .
+
+ex:has-wingspan
+  rdfs:label "has wingspan" .
+
+ex:123
+  rdfs:label "owl 123" ;
+  ex:translation "hibou 123"@fr ;
+  ex:has-wingspan "22"^^ex:inches .
 </textarea>
+</div>
 
-While a Turtle file usually has just a few prefixes, a Knotation file might require a large number of labels, and we often want to use the same labels for multiple Knotation files. So we usually put that 'context' information in a second file. The Knotation file on the left provides prefixes and labels that are used in the Knotation file in the middle. But only the content of the Knotation file in the middle is converted to the Turtle file on the right.
+<script>
+var ex_2_kn = knotation_editor.editor.fromSelector('#ex_2_kn', {mode: 'knotation'});
+var ex_2_ttl = knotation_editor.editor.fromSelector('#ex_2_ttl', {mode: 'turtle'});
+</script>
 
-<textarea class="third">
+A Knotation file might require a large number of labels, and we often want to use the same labels for multiple Knotation files. So we usually put that 'context' information in a second file.
+
+The Knotation file on the left provides prefixes and labels that are used in the Knotation file in the middle. Using that information, the Knotation file in the middle is translated into the Turtle file on the right.
+
+<div id="ex_3" class="examples thirds">
+<textarea id="ex_3_env">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 @prefix ex: <https://example.com/>
 
-: ex:some-predicate
-rdfs:label: some predicate
+: rdfs:label
+rdfs:label: label
+
+: ex:translation
+label: translation
+
+: ex:inches
+label: inches
+
+: ex:has-wingspan
+label: has wingspan
 </textarea>
 
-<textarea class="third">
-: ex:some-subject
-some predicate: text
+<textarea id="ex_3_kn">
+: ex:123
+label: owl 123
+translation; @fr: hibou 123
+has wingspan; inches: 22
 </textarea>
 
-<textarea class="third">
+<textarea id="ex_3_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex: <https://example.com/> .
 
-ex:some-subject
-  ex:some-predicate "text" .
+ex:123
+  rdfs:label "owl 123" ;
+  ex:translation "hibou 123"@fr ;
+  ex:has-wingspan "22"^^ex:inches .
 </textarea>
+</div>
 
-In Knotation we can specify the default datatype for a predicate.
+<script>
+var ex_3_env = knotation_editor.editor.fromSelector('#ex_3_env', {mode: 'knotation'});
+var ex_3_kn = knotation_editor.editor.fromSelector('#ex_3_kn', {mode: 'knotation'});
+var ex_3_ttl = knotation_editor.editor.fromSelector('#ex_3_ttl', {mode: 'turtle'});
+</script>
 
-<textarea class="third">
+We can also specify the default datatype for a predicate, which makes the Knotation in the middle even more concise.
+
+<div id="ex_4" class="examples thirds">
+<textarea id="ex_4_env">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 @prefix kn: <https://knotation.org/>
 @prefix ex: <https://example.com/>
 
 : rdfs:label
 rdfs:label: label
 
-: kn:default-datatype
+: kn:datatype/link
+label: link
+
+: kn:predicate/default-language
+label: default language
+
+: kn:predicate/default-datatype
 label: default datatype
-default datatype: kn:datatype/datatype
+default datatype; link: link
 
-: ex:has-french-label
-label: has French label
-default datatype: @fr
+: ex:translation
+label: translation
+default language: fr
 
-: ex:has-size
-label: has size
-default datatype: xsd:integer
+: ex:inches
+label: inches
+
+: ex:has-wingspan
+label: has wingspan
+default datatype: inches
 </textarea>
 
-<textarea class="third">
-: ex:some-subject
-label: some subject
-has French label: un sujet
-has size: 3
+<textarea id="ex_4_kn">
+: ex:123
+label: owl 123
+translation: hibou 123
+has wingspan: 22
 </textarea>
 
-<textarea class="third">
+<textarea id="ex_4_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix kn: <https://knotation.org/> .
 @prefix ex: <https://example.com/> .
 
-ex:some-subject
-  rdfs:label "some subject" ;
-  ex:has-french-label "un sujet"@fr ;
-  ex:has-size "3"^^xsd:integer .
+ex:123
+  rdfs:label "owl 123" ;
+  ex:translation "hibou 123"@fr ;
+  ex:has-wingspan "22"^^ex:inches .
 </textarea>
+</div>
 
-In Knotation we need to be explicit when an object is a link, but default datatypes make this easy.
+<script>
+var ex_4_env = knotation_editor.editor.fromSelector('#ex_4_env', {mode: 'knotation'});
+var ex_4_kn = knotation_editor.editor.fromSelector('#ex_4_kn', {mode: 'knotation'});
+var ex_4_ttl = knotation_editor.editor.fromSelector('#ex_4_ttl', {mode: 'turtle'});
+</script>
 
-<textarea class="third">
+We need to be explicit when an object is a link, but default datatypes make this easy. As previously, the Knotation files are the left and middle, and the corresponding Turtle is on the right.
+
+<div id="ex_5" class="examples thirds">
+<textarea id="ex_5_env">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 @prefix kn: <https://knotation.org/>
 @prefix ex: <https://example.com/>
 
 : rdfs:label
 rdfs:label: label
 
-: kn:link
+: kn:datatype/link
 rdfs:label: link
 
-: kn:default-datatype
+: kn:predicate/default-datatype
 label: default datatype
 default datatype: kn:datatype/datatype
 
@@ -166,7 +246,7 @@ label: has IRI link
 default datatype: link
 </textarea>
 
-<textarea class="third">
+<textarea id="ex_5_kn">
 : ex:labelled-object
 rdfs:label: labelled object
 
@@ -178,9 +258,8 @@ has IRI link: <urn:ietf:rfc:2648>
 ex:no-default; link: ex:curie-object
 </textarea>
 
-<textarea class="third">
+<textarea id="ex_5_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix kn: <https://knotation.org/> .
 @prefix ex: <https://example.com/> .
 
@@ -194,4 +273,10 @@ ex:some-subject
   ex:has-iri-link <urn:ietf:rfc:2648> ;
   ex:no-default ex:curie-object .
 </textarea>
+</div>
 
+<script>
+var ex_5_env = knotation_editor.editor.fromSelector('#ex_5_env', {mode: 'knotation'});
+var ex_5_kn = knotation_editor.editor.fromSelector('#ex_5_kn', {mode: 'knotation'});
+var ex_5_ttl = knotation_editor.editor.fromSelector('#ex_5_ttl', {mode: 'turtle'});
+</script>

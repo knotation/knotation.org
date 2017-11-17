@@ -12,3 +12,18 @@ textarea {
   width: 22em;
   height: 10em;
 }
+
+.examples .CodeMirror {
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
+  border: 1px solid black;
+}
+
+.halves .CodeMirror {
+  width: 45%;
+}
+
+.thirds .CodeMirror {
+  width: 30%;
+}
