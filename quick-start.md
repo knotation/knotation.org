@@ -280,3 +280,85 @@ var ex_5_env = knotation_editor.editor.fromSelector('#ex_5_env', {mode: 'knotati
 var ex_5_kn = knotation_editor.editor.fromSelector('#ex_5_kn', {mode: 'knotation'});
 var ex_5_ttl = knotation_editor.editor.fromSelector('#ex_5_ttl', {mode: 'turtle'});
 </script>
+
+In Knotation you can write OWL class expressions just like in Protege, using the OWL Manchester Syntax. This is a big advantage over Turtle, where the OWL class expressions use nested anonymous constructs.
+
+<div id="ex_6" class="examples thirds">
+<textarea id="ex_6_env">
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix obo: <http://purl.obolibrary.org/obo/>
+@prefix knd: <https://knotation.org/datatype/>
+@prefix knp: <https://knotation.org/predicate/>
+@prefix ex: <https://example.com/>
+
+: rdfs:label
+rdfs:label: label
+
+: knd:link
+label: link
+
+: knd:omn
+label: OWL Manchester Syntax
+
+: knp:default-datatype
+label: default datatype
+default datatype; link: link
+
+: rdf:type
+label: type
+default datatype: link
+
+: rdfs:subClassOf
+label: subclass of
+default datatype: OWL Manchester Syntax
+
+: obo:RO_0002162
+label: in taxon
+
+: obo:NCBITaxon_56313
+label: Tyto alba
+
+: obo:UBERON_0000033
+label: head
+</textarea>
+
+<textarea id="ex_6_kn">
+: ex:owl-head
+label: owl head
+type: owl:Class
+subclass of: head and ('in taxon' some 'Tyto alba')")
+</textarea>
+
+<textarea id="ex_6_ttl">
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix knd: <https://knotation.org/datatype/> .
+@prefix knp: <https://knotation.org/predicate/> .
+@prefix ex: <https://example.com/> .
+
+ex:owl-head
+  rdfs:label "owl head" ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [
+    rdf:type owl:Class ;
+    owl:intersectionOf (
+      obo:UBERON_0000033
+      [
+        rdf:type owl:Restriction ;
+        owl:onProperty obo:RO_0002162 ;
+        owl:someValuesFrom obo:NCBITaxon_56313 ;
+      ]
+    ) ;
+  ] .
+</textarea>
+</div>
+
+<script>
+var ex_6_env = knotation_editor.editor.fromSelector('#ex_6_env', {mode: 'knotation'});
+var ex_6_kn = knotation_editor.editor.fromSelector('#ex_6_kn', {mode: 'knotation'});
+var ex_6_ttl = knotation_editor.editor.fromSelector('#ex_6_ttl', {mode: 'turtle'});
+</script>
