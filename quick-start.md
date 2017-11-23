@@ -328,7 +328,7 @@ label: head
 : ex:owl-head
 label: owl head
 type: owl:Class
-subclass of: head and ('in taxon' some 'Tyto alba')")
+subclass of: head and ('in taxon' some 'Tyto alba')
 </textarea>
 
 <textarea id="ex_6_ttl">
