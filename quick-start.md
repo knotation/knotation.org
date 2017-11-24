@@ -21,6 +21,8 @@ ex:has-wingspan; ex:inches: 22
 ex:text: Text that spans multiple lines...
  
  ... must be indented with a single space.
+
+# Lines starting with "#" are comments
 </textarea>
 
 <textarea id="ex_1_ttl">
@@ -34,6 +36,8 @@ ex:123
   ex:text """Text that spans multiple lines...
 
 ... must be indented with a single space.""" .
+
+# Lines starting with "#" are comments
 </textarea>
 </div>
 
