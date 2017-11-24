@@ -114,8 +114,8 @@ ex:123
 </div>
 
 <script>
-var ex_2_kn = knotation_editor.editor.fromSelector('#ex_2_kn', {mode: 'knotation'});
-var ex_2_ttl = knotation_editor.editor.fromSelector('#ex_2_ttl', {mode: 'turtle'});
+var ex_2_kn = org.knotation.editor.core.fromSelector('#ex_2_kn', {mode: 'knotation'});
+var ex_2_ttl = org.knotation.editor.core.fromSelector('#ex_2_ttl', {mode: 'turtle'});
 </script>
 
 A Knotation file might require a large number of labels, and we often want to use the same labels for multiple Knotation files. So we usually put that 'context' information in a second file.
@@ -159,9 +159,9 @@ ex:123
 </div>
 
 <script>
-var ex_3_env = knotation_editor.editor.fromSelector('#ex_3_env', {mode: 'knotation'});
-var ex_3_kn = knotation_editor.editor.fromSelector('#ex_3_kn', {mode: 'knotation'});
-var ex_3_ttl = knotation_editor.editor.fromSelector('#ex_3_ttl', {mode: 'turtle'});
+var ex_3_env = org.knotation.editor.core.fromSelector('#ex_3_env', {mode: 'knotation'});
+var ex_3_kn = org.knotation.editor.core.fromSelector('#ex_3_kn', {mode: 'knotation'});
+var ex_3_ttl = org.knotation.editor.core.fromSelector('#ex_3_ttl', {mode: 'turtle'});
 </script>
 
 We can also specify the default datatype for a predicate, which makes the Knotation in the middle even more concise.
@@ -217,9 +217,9 @@ ex:123
 </div>
 
 <script>
-var ex_4_env = knotation_editor.editor.fromSelector('#ex_4_env', {mode: 'knotation'});
-var ex_4_kn = knotation_editor.editor.fromSelector('#ex_4_kn', {mode: 'knotation'});
-var ex_4_ttl = knotation_editor.editor.fromSelector('#ex_4_ttl', {mode: 'turtle'});
+var ex_4_env = org.knotation.editor.core.fromSelector('#ex_4_env', {mode: 'knotation'});
+var ex_4_kn = org.knotation.editor.core.fromSelector('#ex_4_kn', {mode: 'knotation'});
+var ex_4_ttl = org.knotation.editor.core.fromSelector('#ex_4_ttl', {mode: 'turtle'});
 </script>
 
 We need to be explicit when an object is a link, but default datatypes make this easy. As previously, the Knotation files are the left and middle, and the corresponding Turtle is on the right.
@@ -287,9 +287,9 @@ ex:some-subject
 </div>
 
 <script>
-var ex_5_env = knotation_editor.editor.fromSelector('#ex_5_env', {mode: 'knotation'});
-var ex_5_kn = knotation_editor.editor.fromSelector('#ex_5_kn', {mode: 'knotation'});
-var ex_5_ttl = knotation_editor.editor.fromSelector('#ex_5_ttl', {mode: 'turtle'});
+var ex_5_env = org.knotation.editor.core.fromSelector('#ex_5_env', {mode: 'knotation'});
+var ex_5_kn = org.knotation.editor.core.fromSelector('#ex_5_kn', {mode: 'knotation'});
+var ex_5_ttl = org.knotation.editor.core.fromSelector('#ex_5_ttl', {mode: 'turtle'});
 </script>
 
 In Knotation you can write OWL class expressions just like in Protege, using the OWL Manchester Syntax. This is a big advantage over Turtle, where the OWL class expressions use nested anonymous constructs.
@@ -369,7 +369,7 @@ ex:owl-head
 </div>
 
 <script>
-var ex_6_env = knotation_editor.editor.fromSelector('#ex_6_env', {mode: 'knotation'});
-var ex_6_kn = knotation_editor.editor.fromSelector('#ex_6_kn', {mode: 'knotation'});
-var ex_6_ttl = knotation_editor.editor.fromSelector('#ex_6_ttl', {mode: 'turtle'});
+var ex_6_env = org.knotation.editor.core.fromSelector('#ex_6_env', {mode: 'knotation'});
+var ex_6_kn = org.knotation.editor.core.fromSelector('#ex_6_kn', {mode: 'knotation'});
+var ex_6_ttl = org.knotation.editor.core.fromSelector('#ex_6_ttl', {mode: 'turtle'});
 </script>
