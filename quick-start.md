@@ -18,6 +18,9 @@ Turtle syntax is the closest to Knotation. Below, an individual (an owl) identif
 rdfs:label: owl 123
 ex:translation; @fr: hibou 123
 ex:has-wingspan; ex:inches: 22
+ex:text: Text that spans multiple lines...
+ 
+ ... must be indented with a single space.
 </textarea>
 
 <textarea id="ex_1_ttl">
@@ -27,7 +30,10 @@ ex:has-wingspan; ex:inches: 22
 ex:123
   rdfs:label "owl 123" ;
   ex:translation "hibou 123"@fr ;
-  ex:has-wingspan "22"^^ex:inches .
+  ex:has-wingspan "22"^^ex:inches ;
+  ex:text """Text that spans multiple lines...
+
+... must be indented with a single space.""" .
 </textarea>
 </div>
 
