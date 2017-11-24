@@ -19,7 +19,7 @@ rdfs:label: owl 123
 ex:translation; @fr: hibou 123
 ex:has-wingspan; ex:inches: 22
 ex:text: Text that spans multiple lines...
- 
+
  ... must be indented with a single space.
 
 # Lines starting with "#" are comments
@@ -42,13 +42,9 @@ ex:123
 </div>
 
 <script>
-var ex_1_line_map = org.knotation.editor.util.new_line_map();
 var ex_1_kn = org.knotation.editor.core.fromSelector('#ex_1_kn', {mode: 'knotation'});
 var ex_1_ttl = org.knotation.editor.core.fromSelector('#ex_1_ttl', {mode: 'turtle'});
-org.knotation.editor.update.compile_content_to(ex_1_line_map, ex_1_kn, ex_1_ttl);
-org.knotation.editor.update.cross__GT_update_BANG_(ex_1_line_map, ex_1_kn, ex_1_ttl);
-org.knotation.editor.highlight.cross__GT_highlight_BANG_(ex_1_line_map, ex_1_kn, ex_1_ttl);
-org.knotation.editor.highlight.subject_highlight_on_move_BANG_(ex_1_kn);
+org.knotation.editor.core.linked(ex_1_kn, ex_1_ttl);
 </script>
 
 TODO: Synchronize these editors, so a change to one is immediately reflected in the other.
@@ -120,6 +116,7 @@ ex:123
 <script>
 var ex_2_kn = org.knotation.editor.core.fromSelector('#ex_2_kn', {mode: 'knotation'});
 var ex_2_ttl = org.knotation.editor.core.fromSelector('#ex_2_ttl', {mode: 'turtle'});
+org.knotation.editor.core.linked(ex_2_kn, ex_2_ttl);
 </script>
 
 A Knotation file might require a large number of labels, and we often want to use the same labels for multiple Knotation files. So we usually put that 'context' information in a second file.
