@@ -38,8 +38,13 @@ ex:123
 </div>
 
 <script>
-var ex_1_kn = knotation_editor.editor.fromSelector('#ex_1_kn', {mode: 'knotation'});
-var ex_1_ttl = knotation_editor.editor.fromSelector('#ex_1_ttl', {mode: 'turtle'});
+var ex_1_line_map = org.knotation.editor.util.new_line_map();
+var ex_1_kn = org.knotation.editor.core.fromSelector('#ex_1_kn', {mode: 'knotation'});
+var ex_1_ttl = org.knotation.editor.core.fromSelector('#ex_1_ttl', {mode: 'turtle'});
+org.knotation.editor.update.compile_content_to(ex_1_line_map, ex_1_kn, ex_1_ttl);
+org.knotation.editor.update.cross__GT_update_BANG_(ex_1_line_map, ex_1_kn, ex_1_ttl);
+org.knotation.editor.highlight.cross__GT_highlight_BANG_(ex_1_line_map, ex_1_kn, ex_1_ttl);
+org.knotation.editor.highlight.subject_highlight_on_move_BANG_(ex_1_kn);
 </script>
 
 TODO: Synchronize these editors, so a change to one is immediately reflected in the other.
