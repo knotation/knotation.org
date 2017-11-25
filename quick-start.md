@@ -19,7 +19,7 @@ rdfs:label: owl 123
 ex:translation; @fr: hibou 123
 ex:has-wingspan; ex:inches: 22
 ex:text: Text that spans multiple lines...
- 
+
  ... must be indented with a single space.
 
 # Lines starting with "#" are comments
@@ -44,7 +44,7 @@ ex:123
 <script>
 var ex_1_kn = org.knotation.editor.core.fromSelector('#ex_1_kn', {mode: 'knotation'});
 var ex_1_ttl = org.knotation.editor.core.fromSelector('#ex_1_ttl', {mode: 'turtle'});
-org.knotation.editor.core.linked(ex_1_kn, ex_1_ttl);
+org.knotation.editor.core.linked([ex_1_kn, ex_1_ttl]);
 </script>
 
 TODO: Synchronize these editors, so a change to one is immediately reflected in the other.
@@ -116,7 +116,7 @@ ex:123
 <script>
 var ex_2_kn = org.knotation.editor.core.fromSelector('#ex_2_kn', {mode: 'knotation'});
 var ex_2_ttl = org.knotation.editor.core.fromSelector('#ex_2_ttl', {mode: 'turtle'});
-org.knotation.editor.core.linked(ex_2_kn, ex_2_ttl);
+org.knotation.editor.core.linked([ex_2_kn, ex_2_ttl]);
 </script>
 
 A Knotation file might require a large number of labels, and we often want to use the same labels for multiple Knotation files. So we usually put that 'context' information in a second file.
@@ -163,6 +163,7 @@ ex:123
 var ex_3_env = org.knotation.editor.core.fromSelector('#ex_3_env', {mode: 'knotation'});
 var ex_3_kn = org.knotation.editor.core.fromSelector('#ex_3_kn', {mode: 'knotation'});
 var ex_3_ttl = org.knotation.editor.core.fromSelector('#ex_3_ttl', {mode: 'turtle'});
+org.knotation.editor.core.linked([ex_3_env, ex_3_kn, ex_3_ttl]);
 </script>
 
 We can also specify the default datatype for a predicate, which makes the Knotation in the middle even more concise.
@@ -221,6 +222,7 @@ ex:123
 var ex_4_env = org.knotation.editor.core.fromSelector('#ex_4_env', {mode: 'knotation'});
 var ex_4_kn = org.knotation.editor.core.fromSelector('#ex_4_kn', {mode: 'knotation'});
 var ex_4_ttl = org.knotation.editor.core.fromSelector('#ex_4_ttl', {mode: 'turtle'});
+org.knotation.editor.core.linked([ex_4_env, ex_4_kn, ex_4_ttl]);
 </script>
 
 We need to be explicit when an object is a link, but default datatypes make this easy. As previously, the Knotation files are the left and middle, and the corresponding Turtle is on the right.
@@ -291,6 +293,7 @@ ex:some-subject
 var ex_5_env = org.knotation.editor.core.fromSelector('#ex_5_env', {mode: 'knotation'});
 var ex_5_kn = org.knotation.editor.core.fromSelector('#ex_5_kn', {mode: 'knotation'});
 var ex_5_ttl = org.knotation.editor.core.fromSelector('#ex_5_ttl', {mode: 'turtle'});
+org.knotation.editor.core.linked([ex_5_env, ex_5_kn, ex_5_ttl]);
 </script>
 
 In Knotation you can write OWL class expressions just like in Protege, using the OWL Manchester Syntax. This is a big advantage over Turtle, where the OWL class expressions use nested anonymous constructs.
@@ -373,4 +376,5 @@ ex:owl-head
 var ex_6_env = org.knotation.editor.core.fromSelector('#ex_6_env', {mode: 'knotation'});
 var ex_6_kn = org.knotation.editor.core.fromSelector('#ex_6_kn', {mode: 'knotation'});
 var ex_6_ttl = org.knotation.editor.core.fromSelector('#ex_6_ttl', {mode: 'turtle'});
+org.knotation.editor.core.linked([ex_6_env, ex_6_kn, ex_6_ttl]);
 </script>
