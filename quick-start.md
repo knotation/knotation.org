@@ -19,11 +19,10 @@ rdfs:label: owl 123
 ex:translation; @fr: hibou 123
 ex:has-wingspan; ex:inches: 22
 ex:text: Text that spans multiple lines...
-
+ 
  ... must be indented with a single space.
 
-# Lines starting with "#" are comments
-</textarea>
+# Lines starting with "#" are comments</textarea>
 
 <textarea id="ex_1_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -37,8 +36,7 @@ ex:123
 
 ... must be indented with a single space.""" .
 
-# Lines starting with "#" are comments
-</textarea>
+# Lines starting with "#" are comments</textarea>
 </div>
 
 <script>
@@ -87,8 +85,7 @@ label: has wingspan
 : ex:123
 label: owl 123
 translation; @fr: hibou 123
-has wingspan; inches: 22
-</textarea>
+has wingspan; inches: 22</textarea>
 
 <textarea id="ex_2_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -109,8 +106,7 @@ ex:has-wingspan
 ex:123
   rdfs:label "owl 123" ;
   ex:translation "hibou 123"@fr ;
-  ex:has-wingspan "22"^^ex:inches .
-</textarea>
+  ex:has-wingspan "22"^^ex:inches .</textarea>
 </div>
 
 <script>
@@ -138,15 +134,13 @@ label: translation
 label: inches
 
 : ex:has-wingspan
-label: has wingspan
-</textarea>
+label: has wingspan</textarea>
 
 <textarea id="ex_3_kn">
 : ex:123
 label: owl 123
 translation; @fr: hibou 123
-has wingspan; inches: 22
-</textarea>
+has wingspan; inches: 22</textarea>
 
 <textarea id="ex_3_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -155,8 +149,7 @@ has wingspan; inches: 22
 ex:123
   rdfs:label "owl 123" ;
   ex:translation "hibou 123"@fr ;
-  ex:has-wingspan "22"^^ex:inches .
-</textarea>
+  ex:has-wingspan "22"^^ex:inches .</textarea>
 </div>
 
 <script>
@@ -196,15 +189,13 @@ label: inches
 
 : ex:has-wingspan
 label: has wingspan
-default datatype: inches
-</textarea>
+default datatype: inches</textarea>
 
 <textarea id="ex_4_kn">
 : ex:123
 label: owl 123
 translation: hibou 123
-has wingspan: 22
-</textarea>
+has wingspan: 22</textarea>
 
 <textarea id="ex_4_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -214,8 +205,7 @@ has wingspan: 22
 ex:123
   rdfs:label "owl 123" ;
   ex:translation "hibou 123"@fr ;
-  ex:has-wingspan "22"^^ex:inches .
-</textarea>
+  ex:has-wingspan "22"^^ex:inches .</textarea>
 </div>
 
 <script>
@@ -257,8 +247,7 @@ default datatype: link
 
 : ex:has-iri-link
 label: has IRI link
-default datatype: link
-</textarea>
+default datatype: link</textarea>
 
 <textarea id="ex_5_kn">
 : ex:labelled-object
@@ -269,8 +258,7 @@ has label link: labelled object
 has CURIE link: ex:curie-object
 has HTTP URL link: http://example.com/url-object
 has IRI link: <urn:ietf:rfc:2648>
-ex:no-default; link: ex:curie-object
-</textarea>
+ex:no-default; link: ex:curie-object</textarea>
 
 <textarea id="ex_5_ttl">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -285,8 +273,7 @@ ex:some-subject
   ex:has-curie-link ex:curie-object ;
   ex:has-httpurl-link <http://example.com/url-object> ;
   ex:has-iri-link <urn:ietf:rfc:2648> ;
-  ex:no-default ex:curie-object .
-</textarea>
+  ex:no-default ex:curie-object .</textarea>
 </div>
 
 <script>
@@ -336,15 +323,13 @@ label: in taxon
 label: Tyto alba
 
 : obo:UBERON_0000033
-label: head
-</textarea>
+label: head</textarea>
 
 <textarea id="ex_6_kn">
 : ex:owl-head
 label: owl head
 type: owl:Class
-subclass of: head and ('in taxon' some 'Tyto alba')
-</textarea>
+subclass of: head and ('in taxon' some 'Tyto alba')</textarea>
 
 <textarea id="ex_6_ttl">
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -368,8 +353,7 @@ ex:owl-head
         owl:someValuesFrom obo:NCBITaxon_56313 ;
       ]
     ) ;
-  ] .
-</textarea>
+  ] .</textarea>
 </div>
 
 <script>
