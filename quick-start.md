@@ -1,13 +1,13 @@
 # Knotation Quick Start
 
+This quick start assumes you're familiar with [Linked Data](http://linkeddata.org) and [Turtle syntax](https://en.wikipedia.org/wiki/Turtle_(syntax) ).
 
-This quick start assumes you're familiar with Linked Data and Turtle syntax. If not, the longer [tutorial](tutorial.html) will be a better introduction.
+<script src="assets/js/knotation_editor.js"></script>
 
-<script src="knotation_editor.js"></script>
 
-## Knotation vs. Turtle
+## Knotation and Turtle
 
-Turtle syntax is the closest to Knotation. Below, an individual (an owl) identified by `ex:123` is defined in Knotation on the left and Turtle on the right.
+Knotation is similar to Turtle syntax. Try adding an `rdfs:comment` to the Knotation on the left, and see what happens to the Turtle on the right.
 
 <div id="ex_1" class="examples halves">
 <textarea id="ex_1_kn">
@@ -18,9 +18,9 @@ Turtle syntax is the closest to Knotation. Below, an individual (an owl) identif
 rdfs:label: owl 123
 ex:translation; @fr: hibou 123
 ex:has-wingspan; ex:inches: 22
-ex:text: Text that spans multiple lines...
- 
- ... must be indented with a single space.
+ex:description: White face,
+ light brown head and upper body,
+ dark banding on wings.
 
 # Lines starting with "#" are comments</textarea>
 
@@ -32,9 +32,9 @@ ex:123
   rdfs:label "owl 123" ;
   ex:translation "hibou 123"@fr ;
   ex:has-wingspan "22"^^ex:inches ;
-  ex:text """Text that spans multiple lines...
-
-... must be indented with a single space.""" .
+  ex:text """White face,
+light brown head and upper body,
+dark banding on wings.""" .
 
 # Lines starting with "#" are comments</textarea>
 </div>
@@ -42,26 +42,155 @@ ex:123
 <script>
 var ex_1_kn = org.knotation.editor.core.fromSelector('#ex_1_kn', {mode: 'knotation'});
 var ex_1_ttl = org.knotation.editor.core.fromSelector('#ex_1_ttl', {mode: 'turtle'});
+ex_1_ttl.setOption('readOnly', true);
 org.knotation.editor.core.linked([ex_1_kn, ex_1_ttl]);
 </script>
 
-TODO: Synchronize these editors, so a change to one is immediately reflected in the other.
 
-Key similarities and differences in this example:
+## Feature Comparison
 
-- Both use prefixes and CURIEs
-- For subjects
-    - Turtle: current subject at start of line, predicate-object pairs on following lines preceded by tab
-    - Knotation: current subject preceded by `: ` (e.g. `: subject`)
-- For predicate-object pairs
-    - Turtle: separated by semi-colons
-    - Knotation: each line after the subject has a predicate, optional datatype, and object (e.g. `predicate: object`)
-- For plain literals
-    - Turtle: quoted strings
-    - Knotation: plain text
-- For language and typed literals
-    - Turtle: datatype follows the quoted lexical value of the object
-    - Knotation: the dataype comes after the predicate (with a semicolon) and before the lexical value of the object (e.g. `predicate; datatype: object`)
+<table class="table">
+  <tr>
+    <th>Feature</th>
+    <th>Knotation</th>
+    <th>Turtle</th>
+  </tr>
+
+  <tr>
+    <td>basic syntax</td>
+    <td>line-based with indentation</td>
+    <td>token-based with delimiters: <code>.</code> <code>;</code> <code>""</code> <code>[]</code> <code>()</code> <code>{}</code></td>
+  </tr>
+
+  <tr>
+    <td>basic semantics</td>
+    <td>sequence of subject stanzas, each with one-or-more predicate-object pairs</td>
+    <td>same</td>
+  </tr>
+
+  <tr>
+    <td>whitespace</td>
+    <td>significant</td>
+    <td>not significant</td>
+  </tr>
+
+  <tr>
+    <td>general IRI</td>
+    <td><code>&lt;foo&gt;</code></td>
+    <td>same</td>
+  </tr>
+
+  <tr>
+    <td>HTTP(S) URL</td>
+    <td>delimiters optional <code>http://example.com/</code></td>
+    <td>delimiters required <code>&lt;http://example.com/&gt;</code></td>
+  </tr>
+
+  <tr>
+    <td>prefix</td>
+    <td><code>@prefix ex: &lt;http://example.com&gt;</code></td>
+    <td>same, with trailing period <code>.</code></td>
+  </tr>
+
+  <tr>
+    <td>CURIE</td>
+    <td><code>ex:foo</code></td>
+    <td>same</td>
+  </tr>
+
+  <tr>
+    <td>subject</td>
+    <td>line starting with colon-space-identifier, <code>: ex:foo</code></td>
+    <td>just an identifier</td>
+  </tr>
+
+  <tr>
+    <td>predicate</td>
+    <td>line starting with an identifier, then colon-space-object</td>
+    <td>just an identifier</td>
+  </tr>
+
+  <tr>
+    <td>literal object</td>
+    <td>plain string</td>
+    <td>quoted string</td>
+  </tr>
+
+  <tr>
+    <td>IRI object</td>
+    <td>identifier with a "link" datatype</td>
+    <td>just an identifier</td>
+  </tr>
+
+  <tr>
+    <td>datatype</td>
+    <td>after the predicate</td>
+    <td>after the object</td>
+  </tr>
+
+  <tr>
+    <td>subject stanza</td>
+    <td>starts with subject line, ends with next subject</td>
+    <td>starts with subject identifier, ends with period <code>.</code></td>
+  </tr>
+
+  <tr>
+    <td>predicate-object</td>
+    <td><code>predicate: object</code></td>
+    <td><code>predicate "object" ;</code></td>
+  </tr>
+
+  <tr>
+    <td>predicate-object-datatype</td>
+    <td><code>predicate; datatype: object</code></td>
+    <td><code>predicate "object"^^datatype ;</code></td>
+  </tr>
+
+  <tr>
+    <td>predicate-object-language</td>
+    <td><code>predicate; language: object</code></td>
+    <td><code>predicate "object"@language ;</code></td>
+  </tr>
+
+  <tr>
+    <td>multiline literal</td>
+    <td>indented with one space</td>
+    <td>triple-quoted</td>
+  </tr>
+
+  <tr>
+    <td>comment</td>
+    <td>line starting with <code>#</code></td>
+    <td>starts with <code>#</code></td>
+  </tr>
+
+  <tr>
+    <td>label</td>
+    <td>declare then use as an identifier</td>
+    <td>not supported</td>
+  </tr>
+
+  <tr>
+    <td>default datatype</td>
+    <td>supported</td>
+    <td>not supported</td>
+  </tr>
+
+  <tr>
+    <td>default language</td>
+    <td>supported</td>
+    <td>not supported</td>
+  </tr>
+
+  <tr>
+    <td>Manchester syntax</td>
+    <td>supported</td>
+    <td>not supported</td>
+  </tr>
+</table>
+
+
+## Labels
 
 In Knotation, we can use labels instead of CURIEs and IRIs. The label has to be specified before it's used. The result is a little longer but easier to read.
 
@@ -112,12 +241,14 @@ ex:123
 <script>
 var ex_2_kn = org.knotation.editor.core.fromSelector('#ex_2_kn', {mode: 'knotation'});
 var ex_2_ttl = org.knotation.editor.core.fromSelector('#ex_2_ttl', {mode: 'turtle'});
+ex_2_ttl.setOption('readOnly', true);
 org.knotation.editor.core.linked([ex_2_kn, ex_2_ttl]);
 </script>
 
-A Knotation file might require a large number of labels, and we often want to use the same labels for multiple Knotation files. So we usually put that 'context' information in a second file.
 
-The Knotation file on the left provides prefixes and labels that are used in the Knotation file in the middle. Using that information, the Knotation file in the middle is translated into the Turtle file on the right.
+## Re-Usable Context
+
+A Knotation file might require a large number of labels, and we often want to use the same labels for multiple Knotation files. So we usually put that **context** information in a separate file (left), letting us focus on the **content** (middle).
 
 <div id="ex_3" class="examples thirds">
 <textarea id="ex_3_env">
@@ -143,9 +274,6 @@ translation; @fr: hibou 123
 has wingspan; inches: 22</textarea>
 
 <textarea id="ex_3_ttl">
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ex: <https://example.com/> .
-
 ex:123
   rdfs:label "owl 123" ;
   ex:translation "hibou 123"@fr ;
@@ -156,10 +284,14 @@ ex:123
 var ex_3_env = org.knotation.editor.core.fromSelector('#ex_3_env', {mode: 'knotation'});
 var ex_3_kn = org.knotation.editor.core.fromSelector('#ex_3_kn', {mode: 'knotation'});
 var ex_3_ttl = org.knotation.editor.core.fromSelector('#ex_3_ttl', {mode: 'turtle'});
+ex_3_ttl.setOption('readOnly', true);
 org.knotation.editor.core.linked([ex_3_env, ex_3_kn, ex_3_ttl]);
 </script>
 
-We can also specify the default datatype for a predicate, which makes the Knotation in the middle even more concise.
+
+## Default Language and Datatype
+
+We can also specify the default language and datatype for a predicate (left), making the Knotation content (middle) even more concise.
 
 <div id="ex_4" class="examples thirds">
 <textarea id="ex_4_env">
@@ -198,10 +330,6 @@ translation: hibou 123
 has wingspan: 22</textarea>
 
 <textarea id="ex_4_ttl">
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix kn: <https://knotation.org/> .
-@prefix ex: <https://example.com/> .
-
 ex:123
   rdfs:label "owl 123" ;
   ex:translation "hibou 123"@fr ;
@@ -212,26 +340,31 @@ ex:123
 var ex_4_env = org.knotation.editor.core.fromSelector('#ex_4_env', {mode: 'knotation'});
 var ex_4_kn = org.knotation.editor.core.fromSelector('#ex_4_kn', {mode: 'knotation'});
 var ex_4_ttl = org.knotation.editor.core.fromSelector('#ex_4_ttl', {mode: 'turtle'});
+ex_4_ttl.setOption('readOnly', true);
 org.knotation.editor.core.linked([ex_4_env, ex_4_kn, ex_4_ttl]);
 </script>
 
-We need to be explicit when an object is a link, but default datatypes make this easy. As previously, the Knotation files are the left and middle, and the corresponding Turtle is on the right.
+
+## Links
+
+When an object is an IRI (instead of a literal), Knotation requires a "link" datatype. Default datatypes make this easy.
 
 <div id="ex_5" class="examples thirds">
 <textarea id="ex_5_env">
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-@prefix kn: <https://knotation.org/>
+@prefix knd: <https://knotation.org/datatype/>
+@prefix knp: <https://knotation.org/predicate/>
 @prefix ex: <https://example.com/>
 
 : rdfs:label
 rdfs:label: label
 
-: kn:datatype/link
+: knd:link
 rdfs:label: link
 
-: kn:predicate/default-datatype
+: knp:default-datatype
 label: default datatype
-default datatype: kn:datatype/datatype
+default datatype; link: link
 
 : ex:has-label-link
 label: has label link
@@ -261,10 +394,6 @@ has IRI link: <urn:ietf:rfc:2648>
 ex:no-default; link: ex:curie-object</textarea>
 
 <textarea id="ex_5_ttl">
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix kn: <https://knotation.org/> .
-@prefix ex: <https://example.com/> .
-
 ex:labelled-object
   rdfs:label "labelled object" .
 
@@ -280,10 +409,14 @@ ex:some-subject
 var ex_5_env = org.knotation.editor.core.fromSelector('#ex_5_env', {mode: 'knotation'});
 var ex_5_kn = org.knotation.editor.core.fromSelector('#ex_5_kn', {mode: 'knotation'});
 var ex_5_ttl = org.knotation.editor.core.fromSelector('#ex_5_ttl', {mode: 'turtle'});
+ex_5_ttl.setOption('readOnly', true);
 org.knotation.editor.core.linked([ex_5_env, ex_5_kn, ex_5_ttl]);
 </script>
 
-In Knotation you can write OWL class expressions just like in Protege, using the OWL Manchester Syntax. This is a big advantage over Turtle, where the OWL class expressions use nested anonymous constructs.
+
+## Manchester Syntax
+
+Knotation allows you to write OWL class expressions using Manchester syntax, just like in [Protégé](https://protege.stanford.edu). This is **much** more clear and concise than the corresponding Turtle.
 
 <div id="ex_6" class="examples thirds">
 <textarea id="ex_6_env">
@@ -332,14 +465,6 @@ type: owl:Class
 subclass of: head and ('in taxon' some 'Tyto alba')</textarea>
 
 <textarea id="ex_6_ttl">
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix obo: <http://purl.obolibrary.org/obo/> .
-@prefix knd: <https://knotation.org/datatype/> .
-@prefix knp: <https://knotation.org/predicate/> .
-@prefix ex: <https://example.com/> .
-
 ex:owl-head
   rdfs:label "owl head" ;
   rdf:type owl:Class ;
@@ -360,5 +485,6 @@ ex:owl-head
 var ex_6_env = org.knotation.editor.core.fromSelector('#ex_6_env', {mode: 'knotation'});
 var ex_6_kn = org.knotation.editor.core.fromSelector('#ex_6_kn', {mode: 'knotation'});
 var ex_6_ttl = org.knotation.editor.core.fromSelector('#ex_6_ttl', {mode: 'turtle'});
+ex_6_ttl.setOption('readOnly', true);
 org.knotation.editor.core.linked([ex_6_env, ex_6_kn, ex_6_ttl]);
 </script>
