@@ -137,6 +137,8 @@ window.onload = function(e) {
   ex_1_ttl.setOption('readOnly', true);
   org.knotation.editor.core.linked([ex_1_env, ex_1_kn, ex_1_ttl]);
 
+  org.knotation.editor.core.onHover(ex_1_env, function (token) { console.log("TOKEN:", token) });
+
   $('.hideAfterRendering').each( function () {
     $(this).removeClass('active')
   });
