@@ -1,10 +1,10 @@
 # Knotation: A notation for knowledge representation
 
 <div class="alert alert-danger" role="alert">
-<strong>Unstable!</strong> Knotation is new technology under active development. It is <strong>not yet ready</strong> for use in critical systems.
+<strong>Unstable!</strong> Knotation is new technology under active development. It is <strong>not yet ready</strong> for use in critical systems. IRIs are <strong>not permanent</strong> and are likely to change.
 </div>
 
-<div class="row" style="height: 16em">
+<div class="row">
 <div class="col-md-6">
 
   <!-- Nav tabs -->
@@ -19,42 +19,82 @@
       <textarea id="ex_1_env" wrap="off">
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
 @prefix obo: <http://purl.obolibrary.org/obo/>
-@prefix kn: <https://knotation.org/>
+@prefix knd: <https://knotation.org/datatype/>
+@prefix knp: <https://knotation.org/predicate/>
 @prefix ex: <https://example.com/>
 
 : rdfs:label
 rdfs:label: label
 
-: kn:predicate/default-datatype
+: knd:link
+label: link
+
+: knd:omn
+label: OWL Manchester Syntax
+
+: knp:default-datatype
 label: default datatype
-default datatype: kn:datatype/datatype
+default datatype; link: link
 
 : rdf:type
 label: type
-default datatype: kn:datatype/link
+default datatype: link
 
-: obo:NCBITaxon_9615
-label: Canis lupus familiaris
+: rdfs:subClassOf
+label: subclass of
+default datatype: OWL Manchester Syntax
+
+: obo:IAO_0000115
+label: definition
+
+: obo:IAO_0000118
+label: alternative term
 
 : obo:BFO_0000050
 label: part of
 default datatype: link
 
-: obo:UBERON_0000033
-label: head</textarea>
+: obo:RO_0002162
+label: in taxon
+default datatype: link
+
+: obo:NCBITaxon_56313
+label: Tyto alba
+
+: obo:UBERON_0011796
+label: primary remex feather
+definition: A remex feather that is connected to the manus
+
+: ex:0000001
+label: length (cm)
+default datatype: xsd:real
+
+: ex:0000002
+label: coloration</textarea>
     </div>
     <div role="tabpanel" class="tab-pane active" id="content">
       <textarea id="ex_1_kn" wrap="off">
-: ex:laika
-label: Laika
-label; @ru: Лайка
-type: Canis lupus familiaris
+: ex:0000111
+label: barn owl primary remex feather
+type: owl:Class
+definition: A primary remex feather of a barn owl
+subclass of: 'primary remex feather' and
+ ('in taxon' some 'Tyto alba')
+alternative term; @fr: grange hibou primaire remex plume
 
-: ex:laikas-head
-label: Laika's head
-type: head
-part of: Laika</textarea>
+: ex:0002222
+label: barn owl 2222
+type: Tyto alba
+
+: ex:0033333
+label: sample feather 33333
+type: barn owl primary remex feather
+part of: barn owl 2222
+length (cm): 25.0
+coloration: light brown with darker bands</textarea>
     </div>
   </div>
 
@@ -75,21 +115,20 @@ part of: Laika</textarea>
     </div>
     <div role="tabpanel" class="tab-pane active hideAfterRendering" id="turtle">
       <textarea id="ex_1_ttl" wrap="off">
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-@prefix obo: <http://purl.obolibrary.org/obo/>
-@prefix kn: <https://knotation.org/>
-@prefix ex: <https://example.com/>
-
-ex:laika
-  rdfs:label "Laika" ;
-  rdfs:label "Лайка"@ru ;
-  rdf:type obo:NCBITaxon_9612 ./
-
-ex:laikas-head
-  rdfs:label "Laika's head" ;
-  rdf:type obo:UBERON_0000033 ;
-  obo:BFO_0000050 ex:laika .</textarea>
+ex:owl-head
+  rdfs:label "owl head" ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [
+    rdf:type owl:Class ;
+    owl:intersectionOf (
+      obo:UBERON_0000033
+      [
+        rdf:type owl:Restriction ;
+        owl:onProperty obo:RO_0002162 ;
+        owl:someValuesFrom obo:NCBITaxon_56313 ;
+      ]
+    ) ;
+  ] .</textarea>
     </div>
   </div>
 
@@ -100,7 +139,14 @@ ex:laikas-head
 
 <div id="context_message" class="hidden">
   <h3>Knotation Context</h3>
-  <p>We often have a number of prefixes, labels, and defaults that we want to use for our Knotation content.</p>
+  <p>We often have a number of prefixes, labels, and defaults that we want to use for our Knotation content. By putting this <strong>context</strong> information in a separate file, we can reuse it for many <strong>content</strong> files.</p>
+  <ul>
+    <li><strong>prefixes</strong> let us shorten long IRIs to concise CURIEs, just like in Turtle and SPARQL</li>
+    <li><strong>labels</strong> are defined by the <code>rdfs:label</code> predicate; once defined, a label can be used wherever a CURIE or IRI is used</li>
+    <li><strong>default datatypes</strong> are used when a statement does not specify a datatype</li>
+    <li><strong>default languages</strong> work in the same way</li>
+  </ul>
+  <p>When we convert Knotation to Turtle (or other formats) we can choose whether or not to include the full context, just the prefixes, or none of it. In the <strong>Turtle tab</strong>, none of the context information is included, just the content.</p>
 </div>
 
 <div id="content_message" class="hidden">
@@ -112,32 +158,37 @@ ex:laikas-head
   </ol>
   <h3>Knotation is:</h3>
   <ul>
-    <li>a text format that's easy for humans and machines to read and write</li>
+    <li>a text format that's easy for people and machines to read and write</li>
     <li>a tool for working wth linked data and ontologies</li>
     <li>a concrete syntax for RDF and OWL</li>
     <li>free and open source</li>
     <li><strong>work in progress!</strong></li>
   </ul>
-  <p>Please try it out and give us your feedback on our mailing list or issue tracker.</p>
+  <p>Please try it out and give us your feedback on our <a href="https://groups.google.com/d/forum/knotation">mailing list</a> or <a href="https://github.com/knotation/knotation-cljc">issue tracker</a>.</p>
 </div>
 
 <script src="assets/js/knotation_editor.js"></script>
 <script>
 function about_message(ed) {
   var cur = ed.doc.getCursor();
-  line = cur.line + 1;
-  $('#about').html('TODO: Add context-sensitive information about line ' + line + '.');
+  var line = cur.line;
+  var state = ed.knotation.getCompiledLine(line);
+  var help = org.knotation.info.help(state);
+  var html = org.knotation.info.html(help);
+  $('#about').html(html);
 }
 
+var ex_1_env, ex_1_kn, ex_1_ttl;
+
 window.onload = function(e) {
-  var ex_1_env = org.knotation.editor.core.fromSelector('#ex_1_env', {mode: 'knotation'});
-  var ex_1_kn = org.knotation.editor.core.fromSelector('#ex_1_kn', {mode: 'knotation'});
-  ex_1_kn.on('cursorActivity', about_message);
-  var ex_1_ttl = org.knotation.editor.core.fromSelector('#ex_1_ttl', {mode: 'turtle'});
-  ex_1_ttl.setOption('readOnly', true);
+  ex_1_env = org.knotation.editor.core.fromSelector('#ex_1_env', {mode: 'knotation'});
+  ex_1_kn = org.knotation.editor.core.fromSelector('#ex_1_kn', {mode: 'knotation'});
+  ex_1_ttl = org.knotation.editor.core.fromSelector('#ex_1_ttl', {mode: 'turtle'});
   org.knotation.editor.core.linked([ex_1_env, ex_1_kn, ex_1_ttl]);
 
-  org.knotation.editor.core.onHover(ex_1_env, function (token) { console.log("TOKEN:", token) });
+  //ex_1_env.on('cursorActivity', about_message);
+  ex_1_kn.on('cursorActivity', about_message);
+  ex_1_ttl.setOption('readOnly', true);
 
   $('.hideAfterRendering').each( function () {
     $(this).removeClass('active')
@@ -165,15 +216,14 @@ window.onload = function(e) {
 }
 </script>
 
-[Knotation Quick Start](quick-start.html)
+<div class="row text-center">
+  <h2>Learn more with the <a href="quick-start.html">Knotation Quick Start</a>!</h2>
+</div>
 
 
 ## What is Knotation useful for?
 
 Knotation helps people read and write RDF data and OWL ontologies. It's useful for developing ontologies, for applying ontologies to your data, and for working with linked data in general.
-
-- learn more about [RDF and Linked Data](rdf.html)
-- lean more about [Knotation for Open Biomedical Ontologies](obo.html)
 
 
 ## Where can I get Knotation?
@@ -222,7 +272,7 @@ Knotation is a concrete syntax for RDF datasets. At a quick glance, it looks sim
       <td class="success">good</td>
       <td class="warning">poor</td>
       <td class="success">good</td>
-      <td class="success">very good</td>
+      <td class="success">excellent</td>
     </tr>
     <tr>
       <th>triples</th>
@@ -240,7 +290,7 @@ Knotation is a concrete syntax for RDF datasets. At a quick glance, it looks sim
       <td>Trig</td>
       <td class="success">yes</td>
       <td></td>
-      <td class="success">yes</td>
+      <td>planned</td>
     </tr>
     <tr>
       <th>prefixed names</th>
@@ -316,7 +366,10 @@ Knotation is a concrete syntax for RDF datasets. At a quick glance, it looks sim
   </tbody>
 </table>
 
-Learn more in the [Knotation Quick Start](quick-start.html)!
+
+<div class="row text-center">
+  <h2>Learn more with the <a href="quick-start.html">Knotation Quick Start</a>!</h2>
+</div>
 
 
 ## How does Knotation work with tool Y?
@@ -340,3 +393,4 @@ Knotation is an open source project written by our contributors, and shared unde
 - [Try it!](https://fiddle.knotation.org)
 - [Knotation Quick Start](quick-start.html)
 - [Source Code and Downloads](https://github.com/knotation)
+- [Mailing List](https://groups.google.com/d/forum/knotation)
