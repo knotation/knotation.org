@@ -346,7 +346,7 @@ Knotation is still in early development. Several planned features have not yet b
       <th>quads (named graphs)</th>
       <td></td>
       <td>NQuads</td>
-      <td>Trig</td>
+      <td>TriG</td>
       <td class="success">yes</td>
       <td></td>
       <td>planned</td>
