@@ -1,3 +1,7 @@
+---
+title: Knotation Quick Start
+---
+
 # Knotation Quick Start
 
 This quick start assumes you're familiar with [Linked Data](http://linkeddata.org) and [Turtle syntax](https://en.wikipedia.org/wiki/Turtle_(syntax) ).

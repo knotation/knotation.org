@@ -1,3 +1,7 @@
+---
+title: Knotation
+---
+
 # Knotation: A notation for knowledge representation
 
 <div class="alert alert-danger" role="alert">
