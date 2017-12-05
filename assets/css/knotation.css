@@ -5,11 +5,11 @@
 }
 
 .tab-content .CodeMirror {
-  height: 28em;
+  height: 30em;
 }
 
 #about {
-  height: 28em;
+  height: 30em;
   overflow-y: scroll;
   padding: 0.5em;
 }
